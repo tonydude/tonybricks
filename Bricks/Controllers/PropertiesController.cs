@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Bricks.DAL;
 using Bricks.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Bricks.Controllers
 {
@@ -15,11 +16,21 @@ namespace Bricks.Controllers
     {
         private AgencyContext db = new AgencyContext();
 
+        public int? getUserIDFromIdentityID(string id)
+        {
+            int? userID = db.Users.FirstOrDefault(u => u.AspNetUsersID == id).ID;
+            return userID;
+        }
+
         // GET: Properties
         public ActionResult Index()
         {
-            return View(db.Properties.ToList());
+            int? userID = getUserIDFromIdentityID(User.Identity.GetUserId());
+            return View(db.Properties.ToList().Where(p => p.UserID != userID));
+
         }
+
+
 
         // GET: Properties/Details/5
         public ActionResult Details(int? id)
@@ -33,7 +44,10 @@ namespace Bricks.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(property);
+
+
         }
 
         // GET: Properties/Create
@@ -114,7 +128,7 @@ namespace Bricks.Controllers
             db.Properties.Remove(property);
 
             // do I need to manually remove all bids on deleted properties?  Probably
-            // need to review all deletions to ensure they work as expeced.
+            // need to review all deletions to ensure they work as expected.
             // TODO
 
             db.SaveChanges();

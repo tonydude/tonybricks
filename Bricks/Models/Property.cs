@@ -15,6 +15,8 @@ namespace Bricks.Models
         public string StreetName { get; set; }
         public string Town { get; set; }
         public string Postcode { get; set; }
+        public int NumberOfBedrooms { get; set; }
+        public int NumberOfReceptionRooms { get; set; }
         public string HousePicUri { get; set; }
 
         public virtual ICollection<Bid> BidsReceived { get; set; }
