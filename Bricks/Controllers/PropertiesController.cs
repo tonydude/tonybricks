@@ -27,9 +27,7 @@ namespace Bricks.Controllers
         {
             int? userID = getUserIDFromIdentityID(User.Identity.GetUserId());
             return View(db.Properties.ToList().Where(p => p.UserID != userID));
-
         }
-
 
 
         // GET: Properties/Details/5
@@ -69,7 +67,7 @@ namespace Bricks.Controllers
                 property.UserID = userID;
                 db.Properties.Add(property);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("./Index");
                 
             }
 
@@ -102,7 +100,7 @@ namespace Bricks.Controllers
             {
                 db.Entry(property).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("./Index");
             }
             return View(property);
         }
