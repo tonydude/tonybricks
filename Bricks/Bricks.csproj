@@ -172,6 +172,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="DAL\AgencyContext.cs" />
     <Compile Include="DAL\AgencyInitialiser.cs" />
     <Compile Include="Global.asax.cs">
@@ -253,6 +254,11 @@
     <Content Include="Views\Properties\Details.cshtml" />
     <Content Include="Views\Properties\Edit.cshtml" />
     <Content Include="Views\Properties\Index.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
+    <Content Include="Views\Users\Delete.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

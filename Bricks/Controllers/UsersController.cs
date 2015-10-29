@@ -11,112 +11,107 @@ using Bricks.Models;
 
 namespace Bricks.Controllers
 {
-    public class PropertiesController : Controller
+    public class UsersController : Controller
     {
         private AgencyContext db = new AgencyContext();
 
-        // GET: Properties
+        // GET: Users
         public ActionResult Index()
         {
-            return View(db.Properties.ToList());
+            return View(db.Users.ToList());
         }
 
-        // GET: Properties/Details/5
+        // GET: Users/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = db.Properties.Find(id);
-            if (property == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(property);
+            return View(user);
         }
 
-        // GET: Properties/Create
+        // GET: Users/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Properties/Create
+        // POST: Users/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserID,HouseName,HouseNumber,StreetName,Town,Postcode,HousePicUri")] Property property)
+        public ActionResult Create([Bind(Include = "ID,LastName,FirstName,InitialUserType")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Properties.Add(property);
+                db.Users.Add(user);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(property);
+            return View(user);
         }
 
-        // GET: Properties/Edit/5
+        // GET: Users/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = db.Properties.Find(id);
-            if (property == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(property);
+            return View(user);
         }
 
-        // POST: Properties/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,UserID,HouseName,HouseNumber,StreetName,Town,Postcode,HousePicUri")] Property property)
+        public ActionResult Edit([Bind(Include = "ID,LastName,FirstName,InitialUserType")] User user)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(property).State = EntityState.Modified;
+                db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(property);
+            return View(user);
         }
 
-        // GET: Properties/Delete/5
+        // GET: Users/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Property property = db.Properties.Find(id);
-            if (property == null)
+            User user = db.Users.Find(id);
+            if (user == null)
             {
                 return HttpNotFound();
             }
-            return View(property);
+            return View(user);
         }
 
-        // POST: Properties/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Property property = db.Properties.Find(id);
-            db.Properties.Remove(property);
-
-            // do I need to manually remove all bids on deleted properties?  Probably
-            // need to review all deletions to ensure they work as expeced.
-            // TODO
-
+            User user = db.Users.Find(id);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

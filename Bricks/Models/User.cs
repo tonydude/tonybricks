@@ -13,6 +13,7 @@ namespace Bricks.Models
     public class User
     {
         public int ID { get; set; }
+        public string AspNetUsersID { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public UserType InitialUserType { get; set; }
