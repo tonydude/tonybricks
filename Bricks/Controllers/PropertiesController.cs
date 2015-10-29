@@ -16,8 +16,21 @@ namespace Bricks.Controllers
     {
         private AgencyContext db = new AgencyContext();
 
-        public int? getUserIDFromIdentityID(string id)
+        /// <summary>
+        /// For the logged in AspNetUser, find the corresponding Bricks.Models.User.ID
+        /// Returns null if no user is logged in.
+        /// </summary>
+        /// <returns>integer User.ID or null</returns>
+        public int? getUserIDFromIdentityID()
         {
+            string id = User.Identity.GetUserId();
+
+            // generally when not logged in
+            if (id == null)
+            {
+                return null;
+            }
+
             int? userID = db.Users.FirstOrDefault(u => u.AspNetUsersID == id).ID;
             return userID;
         }
@@ -25,7 +38,7 @@ namespace Bricks.Controllers
         // GET: Properties
         public ActionResult Index()
         {
-            int? userID = getUserIDFromIdentityID(User.Identity.GetUserId());
+            int? userID = getUserIDFromIdentityID();
             return View(db.Properties.ToList().Where(p => p.UserID != userID));
         }
 
@@ -63,7 +76,7 @@ namespace Bricks.Controllers
         {
             if (ModelState.IsValid && User.Identity.IsAuthenticated)  // just in case I manage to get here without logging in 
             {
-                int userID = (int)getUserIDFromIdentityID(User.Identity.GetUserId());
+                int userID = (int)getUserIDFromIdentityID();
                 property.UserID = userID;
                 db.Properties.Add(property);
                 db.SaveChanges();
