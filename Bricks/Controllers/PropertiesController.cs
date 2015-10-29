@@ -61,13 +61,16 @@ namespace Bricks.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,UserID,HouseName,HouseNumber,StreetName,Town,Postcode,HousePicUri")] Property property)
+        public ActionResult Create([Bind(Include = "ID,UserID,HouseName,HouseNumber,StreetName,Town,Postcode,HousePicUri,NumberOfBedrooms,NumberOfReceptionRooms")] Property property)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && User.Identity.IsAuthenticated)  // just in case I manage to get here without logging in 
             {
+                int userID = (int)getUserIDFromIdentityID(User.Identity.GetUserId());
+                property.UserID = userID;
                 db.Properties.Add(property);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+                
             }
 
             return View(property);
