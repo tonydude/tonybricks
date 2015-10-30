@@ -79,13 +79,23 @@
         </dt>
 
         <dd>
+            <!-- But what if the image URL passed in isn't valid?  TODO: Test that  -->
             <img src="@Html.DisplayFor(model => model.HousePicUri)" height="150" width="150" />
         </dd>
 
     </dl>
 </div>
 <div>
-    <p><a class="btn btn-default" href="../../Bids/Create">Bid on this property &raquo;</a></p>
+    @{if (User.Identity.IsAuthenticated)
+        {
+            <p><a class="btn btn-default" href="../../Bids/Create">Bid on this property &raquo;</a></p>
+        }
+        else
+        {
+            <p><a class="btn-default" href="../../Account/Login">Login to bid on this property &raquo;</a></p>
+            }
+        }
+
 </div>
 <p> 
     @Html.ActionLink("Back to List", "./Index")
