@@ -47,16 +47,16 @@ namespace Bricks.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BidID,UserID,PropertyID,BidAmount,BidDate")] Bid bid)
+        public ActionResult Create([Bind(Include = "BidID,UserID,PropertyID,BidAmount,BidDate")] SingleBidAndSinglePropertyViewModel bidPropViewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Bids.Add(bid);
+                db.Bids.Add(bidPropViewModel.bid);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(bid);
+            return View(bidPropViewModel.bid);
         }
 
         // GET: Bids/Edit/5
